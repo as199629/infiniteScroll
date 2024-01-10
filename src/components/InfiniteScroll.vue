@@ -36,6 +36,8 @@ const fetchRepositories = async () => {
       throw new Error('Failed to fetch data');
     }
     const data = await response.json();
+    console.log(response);
+    console.log(data);
     repositories.value = [...repositories.value, ...data];
     currentPage.value++;
   } catch (error) {
@@ -65,13 +67,9 @@ const fetchTopUserWithMostRepos = async () => {
 
 const handleScroll = () => {
   const observer = instance.refs.scrollObserver;
-  const scrollPos = window.scrollY + window.innerHeight;
-  const observerTop = observer.offsetTop;
-  const observerHeight = observer.offsetHeight;
-
-  if (scrollPos >= observerTop + observerHeight * 0.9) {
-    fetchRepositories();
-  }
+  const scrollPos = window.scrollY + window.innerHeight; //停留卷軸長度
+  const observerTop = observer.offsetTop; //總卷軸長度
+  if (scrollPos >= observerTop) fetchRepositories();
 };
 
 onMounted(() => {

@@ -1,5 +1,5 @@
 <script setup>
-  import InfiniteScroll from "../components/InfiniteScroll.vue";
+import InfiniteScroll from '../components/InfiniteScroll.vue'
 </script>
 
 <template>

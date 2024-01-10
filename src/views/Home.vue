@@ -1,9 +1,9 @@
 <script setup>
-  import { onMounted, ref } from "vue";
+  import InfiniteScroll from "../components/InfiniteScroll.vue";
 </script>
 
 <template>
   <v-app>
-    <div>123</div>
+    <InfiniteScroll />
   </v-app>
 </template>

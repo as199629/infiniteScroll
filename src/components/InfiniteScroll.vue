@@ -8,7 +8,9 @@
       height="80"
       :title="repo.name"
       :subtitle="repo.html_url"
+      :href="repo.html_url"
       class="mb-5"
+      target="_blank"
     />
     <div ref="scrollObserver" />
   </v-container>

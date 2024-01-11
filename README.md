@@ -6,7 +6,7 @@
 
 # 簡介
 
-這是一個使用 Vue 3、Vite 和 Vuetify 構建的專案。
+這是一個使用 Vue 3、Vite 和 Vuetify 構建的專案。  
 專案內容為實作無限滾動，並介接 github repositories api。
 
 # 建置專案

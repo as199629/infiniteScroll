@@ -18,6 +18,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, getCurrentInstance } from 'vue';
+import _ from 'lodash'; // 引入 Lodash
 const instance = getCurrentInstance();
 const repositories = ref([]); // 存放所有的存储库信息
 const displayedRepositories = ref([]); // 顯示的存儲庫信息
@@ -65,21 +66,26 @@ const fetchTopUserWithMostRepos = async () => {
   }
 };
 
-const handleScroll = () => {
+// 使用 Lodash 的節流函數，限制频率
+const handleThrottledScroll = _.throttle(() => {
   const observer = instance.refs.scrollObserver;
-  const scrollPos = window.scrollY + window.innerHeight; //停留卷軸長度
-  const observerTop = observer.offsetTop; //總卷軸長度
-  if (scrollPos >= observerTop) fetchRepositories();
-};
+  const scrollPos = window.scrollY + window.innerHeight;
+  const observerTop = observer.offsetTop;
+  const observerHeight = observer.offsetHeight;
+
+  if (scrollPos >= observerTop + observerHeight * 0.9) {
+    fetchRepositories();
+  }
+}, 200); // 設置時間間隔，例如200毫秒
 
 onMounted(() => {
   fetchRepositories();
 
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', handleThrottledScroll);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('scroll', handleThrottledScroll);
 });
 </script>
 

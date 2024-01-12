@@ -37,32 +37,12 @@ const fetchRepositories = async () => {
       throw new Error('Failed to fetch data');
     }
     const data = await response.json();
-    console.log(response);
-    console.log(data);
     repositories.value = [...repositories.value, ...data];
     currentPage.value++;
   } catch (error) {
     console.error(error);
   } finally {
     loading.value = false; // 加載完成後重置為false
-  }
-};
-
-const fetchTopUserWithMostRepos = async () => {
-  try {
-    const response = await fetch(
-      'https://api.github.com/search/users?q=type:user&sort=repositories&order=desc&page=1&per_page=1',
-    );
-    if (!response.ok) {
-      throw new Error('Failed to fetch top user');
-    }
-    const { items } = await response.json();
-    const topUser = items[0];
-    if (topUser) {
-      await fetchRepositories(topUser.login);
-    }
-  } catch (error) {
-    console.error(error);
   }
 };
 
@@ -76,11 +56,10 @@ const handleThrottledScroll = _.throttle(() => {
   if (scrollPos >= observerTop + observerHeight * 0.9) {
     fetchRepositories();
   }
-}, 200); // 設置時間間隔，例如200毫秒
+}, 200); // 設置時間間隔
 
 onMounted(() => {
   fetchRepositories();
-
   window.addEventListener('scroll', handleThrottledScroll);
 });
 
